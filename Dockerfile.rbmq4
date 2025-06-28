@@ -1,0 +1,31 @@
+# Use the official RabbitMQ 4 management Alpine image as the base
+FROM rabbitmq:4-management-alpine
+
+# Set environment variables (optional, but good practice for clarity)
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install the required packages
+# 'apk add --no-cache' is used to avoid storing package cache, saving space
+RUN apk add --no-cache iputils \
+                       busybox-extras \
+                       nano \
+                       curl \
+                       tcpdump
+
+# Add a global alias for 'll'
+# Create a file in /etc/profile.d/ that defines the alias
+
+RUN echo 'alias ll="ls -laF"' >> /root/.profile
+ENV ENV=/root/.profile
+
+# You can add further configurations or commands here if needed
+# For example, to set up specific RabbitMQ configurations, copy files, etc.
+
+# Expose ports if you're not using the default management image's exposed ports
+# The base image rabbitmq:4-management-alpine already exposes 5672 and 15672,
+# so you usually don't need to explicitly expose them again unless you change them.
+# EXPOSE 5672
+# EXPOSE 15672
+
+# Command to run when the container starts (inherited from base image, usually `rabbitmq-server`)
+# CMD ["rabbitmq-server"]
