@@ -1,0 +1,32 @@
+services:
+  rabbitmq:
+    build:
+      context: .                     # The build context is the current directory (where docker-compose.yml is)
+      dockerfile: Dockerfile.rbmq4   # Specify the custom filename for your Dockerfile
+    
+    container_name: custom-rabbitmq-container   # A human-readable name for the container
+    hostname: rabbitmq-host                     # The hostname inside the container
+
+    ports:
+      - "5672:5672"   # Map host port 5672 to container port 5672 (AMQP protocol)
+      - "15672:15672" # Map host port 15672 to container port 15672 (RabbitMQ Management UI)
+
+    environment:
+      # RabbitMQ user credentials (change these for production!)
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin_rbmq
+      
+      # Optional: Add other RabbitMQ environment variables as needed
+      # RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+S 4:4" # Example: Set Erlang VM arguments
+
+    volumes:
+      # Bind mount: Map a specific host directory to the container's data directory
+      # This ensures RabbitMQ data persists on your host machine.
+      # The ./data/rbmq_data path is relative to the directory where docker-compose.yml resides.
+      - ./rabbitmq_data:/var/lib/rabbitmq
+
+    restart: unless-stopped # Always restart the container unless it's explicitly stopped
+
+    # Optional: If you have other services that depend on RabbitMQ, uncomment and list them
+    # depends_on:
+    #   - another_service_name
