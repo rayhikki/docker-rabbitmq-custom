@@ -18,6 +18,7 @@ services:
       
       # Optional: Add other RabbitMQ environment variables as needed
       # RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+S 4:4" # Example: Set Erlang VM arguments
+      # https://www.rabbitmq.com/docs/configure#supported-environment-variables
 
     volumes:
       # Bind mount: Map a specific host directory to the container's data directory
