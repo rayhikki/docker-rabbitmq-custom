@@ -10,7 +10,8 @@ RUN apk add --no-cache iputils \
                        busybox-extras \
                        nano \
                        curl \
-                       tcpdump
+                       tcpdump \
+                       htop
 
 # Add a global alias for 'll'
 # Create a file in /etc/profile.d/ that defines the alias
